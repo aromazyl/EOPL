@@ -1,6 +1,0 @@
-#lang racket
-
-(define (sort lst)
-  (cond
-    [[null? lst] null]
-    [[null? (cdr lst)] (car null)]
