@@ -37,3 +37,11 @@
     [(is-zero? n) (make-num 1)]
     [(equal? (make-num 1) n) (make-num 1)]
     [else (mult n (factorial (minus n (make-num 1))))]))
+
+(define (to-bigit difftree)
+  (cond
+    [[eq? `(one) difftree] (make-num 1)]
+    [else
+     (minus
+      (to-bigit (cadr difftree))
+      (to-bigit (caddr difftree)))]))
