@@ -1,3 +1,0 @@
-#lang racket
-
-(define (var-exp lc-exp) lc-exp)

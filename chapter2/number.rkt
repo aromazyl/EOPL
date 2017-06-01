@@ -40,7 +40,7 @@
 
 (define (to-bigit difftree)
   (cond
-    [[eq? `(one) difftree] (make-num 1)]
+    [[equal? `(one) difftree] (make-num 1)]
     [else
      (minus
       (to-bigit (cadr difftree))
