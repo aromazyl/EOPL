@@ -1,6 +1,6 @@
 #lang racket
 
-(define (var-exp var) ,var)
+(define (var-exp var) var)
 
 (define (lambda-exp var lc-exp) (list `lambda (list var) lc-exp))
 
