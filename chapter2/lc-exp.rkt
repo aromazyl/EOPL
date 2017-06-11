@@ -1,6 +1,6 @@
 #lang racket
 
-(define (var-exp var) ,var)
+(define (var-exp var) var)
 
 (define (lambda-exp var lc-exp) (list `lambda (list var) lc-exp))
 
@@ -52,5 +52,5 @@
     #f))
 (define (app-exp->rand lc-exp)
   (if (app-exp? lc-exp)
-    (cadr lc-exp)
-    #f))
+      (cadr lc-exp)
+      #f))
