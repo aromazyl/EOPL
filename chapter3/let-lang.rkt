@@ -1,4 +1,5 @@
 #lang eopl
+
 (define-datatype program program?
   (a-program
    (exp1 expression?)))
@@ -39,10 +40,24 @@
    (exp3 expression?))
   (var-exp
    (var identifier?))
+  (cons-exp
+   (exp1 expression?)
+   (exp2 expression?))
+  (car-exp
+   (exp expression?))
+  (cdr-exp
+   (exp expression?))
+  (null?-exp
+   (exp expression?))
+  (emptylist-exp
+   (exp null?))
+  (list-exp
+   (exp (list-of expression?)))
   (let-exp
    (var identifier?)
    (exp1 expression?)
    (body expression?)))
+
 
 (define init-env
   (lambda ()
@@ -79,6 +94,13 @@
    (num number?))
   (bool-val
    (bool boolean?)))
+
+(define expval-val
+  (lambda (val)
+    (cases expval val
+      (num-val (num) num)
+      (bool-val (val) val)
+      (else (report-expval-extractor-error `expval val)))))
 
 (define expval->num
   (lambda (val)
@@ -148,10 +170,19 @@
                 (if (expval->bool val1)
                     (value-of exp2 env)
                     (value-of exp3 env))))
+      (cons-exp (exp1 exp2)
+                (cons (expval->num (value-of exp1)) (expval->num (value-of exp2))))
+      (car-exp (exp)
+               (car (value-of exp)))
+      (cdr-exp (exp)
+               (cdr (value-of exp)))
+      (null?-exp (exp)
+                 (expval->bool (value-of exp)))
+      (emptylist-exp (exp)
+                     `())
+      (list-exp (exp)
+                (map (lambda (ex) (expval-val value-of ex)) exp))
       (let-exp (var exp1 body)
                (let ((val1 (value-of exp1 env)))
                  (value-of body
                            (extend-env var val1 env)))))))
-                
-
-                      
